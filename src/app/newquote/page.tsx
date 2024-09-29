@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 
 const QuoteForm = () => {
   const [quoteText, setQuoteText] = useState("If at first you don't succeed, try, try again.");
@@ -42,7 +42,6 @@ const QuoteForm = () => {
   const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     // Handle form submission logic
-    console.log("Quote submitted:", quoteText);
   };
 
   return (

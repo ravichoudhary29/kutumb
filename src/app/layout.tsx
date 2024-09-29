@@ -1,6 +1,9 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { AppProvider } from "@/providers/AppProvider";
+import ErrorBoundary from "./error/ErrorBoundart";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,11 +27,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" data-theme="">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ErrorBoundary>
+          <AppProvider>
+            {children}
+          </AppProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

@@ -1,10 +1,29 @@
+'use client';
+import { useAuth } from "@/providers/AppProvider";
+import { withAuth } from "../hocs/withAuth";
 import React from "react";
+import { PAGE_ROUTES } from "../libs/pages-routes";
 
 const QuoteList = () => {
+
+  const { handleLogout } = useAuth();
+  const onLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    handleLogout();
+  };
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       {/* Main Container */}
       <div className="border rounded-lg p-8 bg-white shadow-xl w-full max-w-md md:max-w-lg lg:max-w-2xl relative">
+
+        {/* Logout Button */}
+        <button
+          onClick={(e) => onLogout(e)}
+          className="absolute top-6 right-6 bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-red-600 transition duration-300"
+        >
+          Log Out
+        </button>
+
         {/* Title Section */}
         <div className="text-center mb-8">
           <p className="bg-yellow-300 text-3xl font-bold p-4 rounded-md shadow-md">
@@ -16,25 +35,33 @@ const QuoteList = () => {
         <div className="grid grid-cols-2 gap-6 mb-12">
           {/* Quote 1 */}
           <div className="bg-pink-200 p-6 rounded-lg text-center flex flex-col justify-center shadow-md h-40 md:h-48 lg:h-56">
-            <p className="font-medium text-lg">Just one small positive thought in the morning can change your whole day.</p>
+            <p className="font-medium text-lg">
+              Just one small positive thought in the morning can change your whole day.
+            </p>
             <p className="mt-2 text-sm font-semibold">@ravi12rocks</p>
           </div>
 
           {/* Quote 2 */}
           <div className="bg-blue-200 p-6 rounded-lg text-center flex flex-col justify-center shadow-md h-40 md:h-48 lg:h-56">
-            <p className="font-medium text-lg">Opportunities don't happen, you create them.</p>
+            <p className="font-medium text-lg">
+              Opportunities don't happen, you create them.
+            </p>
             <p className="mt-2 text-sm font-semibold">@chandanch</p>
           </div>
 
           {/* Quote 3 */}
           <div className="bg-purple-200 p-6 rounded-lg text-center flex flex-col justify-center shadow-md h-40 md:h-48 lg:h-56">
-            <p className="font-medium text-lg">Love your family, work super hard, live your passion.</p>
+            <p className="font-medium text-lg">
+              Love your family, work super hard, live your passion.
+            </p>
             <p className="mt-2 text-sm font-semibold">@shivanijais</p>
           </div>
 
           {/* Quote 4 */}
           <div className="bg-indigo-200 p-6 rounded-lg text-center flex flex-col justify-center shadow-md h-40 md:h-48 lg:h-56">
-            <p className="font-medium text-lg">It is never too late to be what you might have been.</p>
+            <p className="font-medium text-lg">
+              It is never too late to be what you might have been.
+            </p>
             <p className="mt-2 text-sm font-semibold">@pujasah</p>
           </div>
         </div>
@@ -60,4 +87,6 @@ const QuoteList = () => {
   );
 };
 
-export default QuoteList;
+const QuoteListWrapper = withAuth(QuoteList, [PAGE_ROUTES.LOGIN]);
+
+export default QuoteListWrapper;
