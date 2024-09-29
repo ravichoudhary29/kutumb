@@ -1,10 +1,10 @@
 "use client";
 
-import { AppProvider, useAuth } from "@/app/providers/AppProvider";
+import { useAuth } from "@/app/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { PAGE_ROUTES } from "./libs/pages-routes";
-import { withAuth } from "./hocs/withAuth";
+import { withAuth } from "@/app/hocs/withAuth";
 
 function Home() {
   const router = useRouter();

@@ -1,5 +1,5 @@
 export const PAGE_ROUTES = {
-    LOGIN: '/login',
-    NEW_QUOTE: '/newquote',
-    QUOTE_LIST: 'quotelist',
+  LOGIN: '/login',
+  NEW_QUOTE: '/quotes/new',
+  QUOTE_LIST: 'quotes',
 };

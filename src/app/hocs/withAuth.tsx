@@ -1,8 +1,8 @@
 'use client';
-import { useAuth } from '@/app/providers/AppProvider';
+import { useAuth } from '@/app/providers/AuthProvider';
 import { useRouter, usePathname } from 'next/navigation';
 import { ComponentType, useEffect } from 'react';
-import { PAGE_ROUTES } from '../libs/pages-routes';
+import { PAGE_ROUTES } from '@/app/libs/pages-routes';
 
 export function withAuth<T extends JSX.IntrinsicAttributes>(
   Component: ComponentType<T>,

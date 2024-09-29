@@ -1,25 +1,13 @@
 'use client';
-import React, { useState, ChangeEvent, FormEvent } from "react";
+
+import React, { useState, ChangeEvent, FormEvent, useMemo } from "react";
 import { useRouter } from 'next/navigation';
-import { PAGE_ROUTES } from "../libs/pages-routes";
-import { useAuth } from "@/app/providers/AppProvider";
+import { PAGE_ROUTES } from "@/app/libs/pages-routes";
 
 const QuoteForm = () => {
-  const [quoteText, setQuoteText] = useState("If at first you don't succeed, try, try again.");
-  const [image, setImage] = useState<string | null>(null);
-  const [textColor, setTextColor] = useState<string>('#000000'); // Default color is black
-
   const router = useRouter();
-
-  // Color options array
-  const colorOptions = [
-    '#FF5733', // Red
-    '#33FF57', // Green
-    '#3357FF', // Blue
-    '#F1C40F', // Yellow
-    '#8E44AD', // Purple
-    '#E67E22', // Orange
-  ];
+  const [quoteText, setQuoteText] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   // Handle text change with proper typing
   const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,35 +17,26 @@ const QuoteForm = () => {
   // Handle image change with proper typing
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]; // Use optional chaining in case no file is selected
-    console.log(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Handle text color change
-  const handleColorChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextColor(e.target.value);
+    if (!file) return;
+    setImageFile(file);
   };
 
   // Handle form submission with proper typing
-  const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic
+    if (!imageFile || quoteText.trim() === "") return;
   };
 
   const handleBackClick = () => {
     router.push(PAGE_ROUTES.QUOTE_LIST);
   };
 
+  const imageURL = useMemo(() => imageFile ? URL.createObjectURL(imageFile) : null, [imageFile]);
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       {/* Main Container */}
-      <div className="border rounded-lg p-8 bg-white shadow-xl w-full max-w-md md:max-w-lg lg:max-w-2xl relative">
+      <form className="border rounded-lg p-8 bg-white shadow-xl w-full max-w-md md:max-w-lg lg:max-w-2xl relative" onSubmit={handleSubmit}>
 
         {/* Back Button */}
         <button
@@ -73,14 +52,14 @@ const QuoteForm = () => {
             {/* Background image */}
             {/* Background image */}
             <img
-              src={image || "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlYXxlbnwwfHx8fDE2NTI4NTk1MDg&ixlib=rb-1.2.1&q=80&w=1080"} // Direct image URL from Unsplash
+              src={imageURL || "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlYXxlbnwwfHx8fDE2NTI4NTk1MDg&ixlib=rb-1.2.1&q=80&w=1080"} // Direct image URL from Unsplash
               alt="Quote Background"
               className="rounded-lg w-full h-40 object-cover bg-white" // Set height to align with QuoteList
             />
 
             {/* Quote Text Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-xl font-bold text-center" style={{ color: textColor }}>
+              <p className="text-xl font-bold text-center">
                 {quoteText}
               </p>
             </div>
@@ -90,36 +69,13 @@ const QuoteForm = () => {
 
         {/* Quote Input Field */}
         <div className="mb-6">
-          <label className="block text-sm font-semibold text-gray-700 mb-1">Your Text</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Quote Text</label>
           <input
             type="text"
             value={quoteText}
             onChange={handleTextChange}
             className="w-full border border-gray-300 p-2 rounded-lg shadow-md bg-white"
           />
-        </div>
-
-        {/* Color Picker Section */}
-        <div className="mb-6">
-          <label className="block text-sm font-semibold text-gray-700 mb-1">Choose Text Color</label>
-          <div className="flex space-x-2 mb-2">
-            {/* Default color options */}
-            {colorOptions.map((color) => (
-              <div
-                key={color}
-                className="w-8 h-8 rounded-full cursor-pointer"
-                style={{ backgroundColor: color }}
-                onClick={() => setTextColor(color)}
-              />
-            ))}
-            {/* Custom color input */}
-            <input
-              type="color"
-              value={textColor}
-              onChange={handleColorChange}
-              className="w-8 h-8 rounded-full cursor-pointer bg-white text-white"
-            />
-          </div>
         </div>
 
         {/* Image Upload Button */}
@@ -146,17 +102,16 @@ const QuoteForm = () => {
           />
         </div>
 
-
         {/* Submit Button */}
         <div className="text-center">
           <button
-            onClick={handleSubmit}
+            type="submit"
             className="bg-green-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg w-full hover:bg-green-500 transition duration-300"
           >
             Submit
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

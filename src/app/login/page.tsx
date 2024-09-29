@@ -1,9 +1,9 @@
 'use client';
 
-import { useAuth } from "@/app/providers/AppProvider";
+import { useAuth } from "@/app/providers/AuthProvider";
 import React, { FormEvent, useEffect, useState } from "react";
-import { withAuth } from "../hocs/withAuth";
-import { PAGE_ROUTES } from "../libs/pages-routes";
+import { withAuth } from "@/app/hocs/withAuth";
+import { PAGE_ROUTES } from "@/app/libs/pages-routes";
 import { usePathname, useRouter } from "next/navigation";
 
 const LoginPage = () => {
@@ -11,14 +11,14 @@ const LoginPage = () => {
   const router = useRouter();
   const [username, setUsername] = useState<string>('');
   const [otp, setOtp] = useState<string>('');
-  const { handleSubmit, token } = useAuth();
+  const { handleLogin, token } = useAuth();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!username || !otp) return;
 
     try {
-      handleSubmit({ username, otp });
+      handleLogin({ username, otp });
     } catch (error) {
       console.error(error);
     }
