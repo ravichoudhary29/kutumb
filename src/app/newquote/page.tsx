@@ -1,10 +1,15 @@
 'use client';
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useRouter } from 'next/navigation';
+import { PAGE_ROUTES } from "../libs/pages-routes";
+import { useAuth } from "@/app/providers/AppProvider";
 
 const QuoteForm = () => {
   const [quoteText, setQuoteText] = useState("If at first you don't succeed, try, try again.");
   const [image, setImage] = useState<string | null>(null);
   const [textColor, setTextColor] = useState<string>('#000000'); // Default color is black
+
+  const router = useRouter();
 
   // Color options array
   const colorOptions = [
@@ -24,10 +29,11 @@ const QuoteForm = () => {
   // Handle image change with proper typing
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]; // Use optional chaining in case no file is selected
+    console.log(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result as string); // Type assertion since result can be string or ArrayBuffer
+        setImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -44,20 +50,34 @@ const QuoteForm = () => {
     // Handle form submission logic
   };
 
+  const handleBackClick = () => {
+    router.push(PAGE_ROUTES.QUOTE_LIST);
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       {/* Main Container */}
       <div className="border rounded-lg p-8 bg-white shadow-xl w-full max-w-md md:max-w-lg lg:max-w-2xl relative">
 
+        {/* Back Button */}
+        <button
+          className="absolute top-2 left-2 bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+          onClick={handleBackClick}
+        >
+          Back
+        </button>
+
         {/* Image with Quote Text */}
-        <div className="bg-gray-200 p-2 rounded-lg mb-6">
+        <div className="bg-gray-200 p-2 rounded-lg mb-6 mt-10"> {/* Adjusted top margin for space */}
           <div className="relative">
             {/* Background image */}
+            {/* Background image */}
             <img
-              src={image || "/default-image.jpg"} // Default image if none is uploaded
+              src={image || "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlYXxlbnwwfHx8fDE2NTI4NTk1MDg&ixlib=rb-1.2.1&q=80&w=1080"} // Direct image URL from Unsplash
               alt="Quote Background"
-              className="rounded-lg w-full h-40 object-cover" // Set height to align with QuoteList
+              className="rounded-lg w-full h-40 object-cover bg-white" // Set height to align with QuoteList
             />
+
             {/* Quote Text Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <p className="text-xl font-bold text-center" style={{ color: textColor }}>
@@ -75,7 +95,7 @@ const QuoteForm = () => {
             type="text"
             value={quoteText}
             onChange={handleTextChange}
-            className="w-full border border-gray-300 p-2 rounded-lg shadow-md"
+            className="w-full border border-gray-300 p-2 rounded-lg shadow-md bg-white"
           />
         </div>
 
@@ -100,7 +120,6 @@ const QuoteForm = () => {
               className="w-8 h-8 rounded-full cursor-pointer bg-white text-white"
             />
           </div>
-
         </div>
 
         {/* Image Upload Button */}
@@ -108,13 +127,25 @@ const QuoteForm = () => {
           <label className="block text-sm font-semibold text-gray-700 mb-1">
             Upload/Change Image
           </label>
+
+          {/* Custom button/label for file input */}
+          <label
+            htmlFor="file-upload"
+            className="w-full bg-yellow-200 p-2 rounded-lg text-center cursor-pointer shadow-md hover:bg-yellow-300 transition duration-300 inline-block text-black"
+          >
+            Choose Image
+          </label>
+
+          {/* Hidden file input */}
           <input
+            id="file-upload"
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full bg-yellow-200 p-2 rounded-lg text-center cursor-pointer shadow-md"
+            className="hidden"
           />
         </div>
+
 
         {/* Submit Button */}
         <div className="text-center">

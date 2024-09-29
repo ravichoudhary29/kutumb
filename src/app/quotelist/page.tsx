@@ -1,16 +1,22 @@
 'use client';
-import { useAuth } from "@/providers/AppProvider";
+import { useAuth } from "@/app/providers/AppProvider";
 import { withAuth } from "../hocs/withAuth";
 import React from "react";
 import { PAGE_ROUTES } from "../libs/pages-routes";
+import { useRouter } from 'next/navigation';
 
 const QuoteList = () => {
-
   const { handleLogout } = useAuth();
   const onLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     handleLogout();
   };
+  const router = useRouter();
+
+  const handleCreateQuote = () => {
+    router.push(PAGE_ROUTES.NEW_QUOTE);
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       {/* Main Container */}
@@ -68,7 +74,7 @@ const QuoteList = () => {
 
         {/* Floating Create Quote Button at the Bottom */}
         <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2">
-          <button className="bg-green-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-green-500 transition duration-300">
+          <button className="bg-green-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-green-500 transition duration-300" onClick={handleCreateQuote}>
             Create Quote +
           </button>
         </div>
@@ -87,6 +93,6 @@ const QuoteList = () => {
   );
 };
 
-const QuoteListWrapper = withAuth(QuoteList, [PAGE_ROUTES.LOGIN]);
+const QuoteListWrapper = withAuth(QuoteList);
 
 export default QuoteListWrapper;

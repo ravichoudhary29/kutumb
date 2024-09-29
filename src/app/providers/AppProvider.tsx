@@ -5,15 +5,8 @@ import { createContext, useContext, ReactNode } from 'react';
 // Create the context with an empty placeholder
 const initialContext: UseAppReturnType = {
     token: null,
-    isLogin: false,
-    setIsLogin: () => { },
     handleSubmit: async () => { },
-    setUsername: () => { },
-    setOtp: () => { },
-    username: null,
-    otp: null,
-    error: '',
-    handleLogout: async () => { }
+    handleLogout: () => { }
 };
 
 // Create the context
