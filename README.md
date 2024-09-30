@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+Production build(deployed on Vercel): https://kutumb-phi.vercel.app/login
+Sample username and otp for login: sandy and 1234 respectively.
+
 ## Getting Started
 
 First, run the development server:
