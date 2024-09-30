@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { PAGE_ROUTES } from "./libs/pages-routes";
 import { withAuth } from "@/app/hocs/withAuth";
 
-function Home() {
+const Home: React.FC = () => {
   const router = useRouter();
   const { token } = useAuth();
 
@@ -15,7 +15,7 @@ function Home() {
   }, [token, router]);
 
   return null;
-}
+};
 
 const HomeWrapper = withAuth(Home);
 

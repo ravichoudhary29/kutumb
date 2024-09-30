@@ -7,7 +7,7 @@ import { PAGE_ROUTES } from "@/app/libs/pages-routes";
 import { useRouter } from 'next/navigation';
 import { useQuotes } from "@/app/providers/QuotesProvider";
 
-const QuoteList = () => {
+const QuoteList: React.FC = () => {
   const router = useRouter();
   const { quotes, allQuotesFetched, fetchNextPage } = useQuotes();
 

@@ -5,7 +5,7 @@ import React, { FormEvent, useEffect, useState } from "react";
 import { PAGE_ROUTES } from "@/app/libs/pages-routes";
 import { usePathname, useRouter } from "next/navigation";
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [username, setUsername] = useState<string>('');
@@ -77,5 +77,6 @@ const LoginPage = () => {
     </article>
   );
 };
+
 
 export default LoginPage;

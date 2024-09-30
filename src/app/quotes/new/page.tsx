@@ -8,7 +8,7 @@ import { useAuth } from "@/app/providers/AuthProvider";
 import { withAuth } from "@/app/hocs/withAuth";
 import Image from "next/image";
 
-const CreateQuotePage = () => {
+const CreateQuotePage: React.FC = () => {
   const { token } = useAuth();
   const router = useRouter();
   const [quoteText, setQuoteText] = useState("");
