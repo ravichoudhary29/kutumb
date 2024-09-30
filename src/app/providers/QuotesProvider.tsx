@@ -6,6 +6,8 @@ import { useQuotesInternal, UseQuotesReturnType } from '@/app/hooks/useQuotesInt
 // Create the context with an empty placeholder
 const initialContext: UseQuotesReturnType = {
   quotes: [],
+  fetchNextPage: () => { },
+  allQuotesFetched: false,
   handleCreateQuote: () => Promise.resolve(),
   handleUploadImage: () => Promise.resolve(),
 };

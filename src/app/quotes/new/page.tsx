@@ -1,10 +1,15 @@
 'use client';
 
-import React, { useState, ChangeEvent, FormEvent, useMemo } from "react";
+import React, { useState, ChangeEvent, FormEvent, useMemo, useCallback } from "react";
 import { useRouter } from 'next/navigation';
 import { PAGE_ROUTES } from "@/app/libs/pages-routes";
+import { MEDIA_UPLOAD_URL, QUOTE_POST_URL } from "@/app/utils/consts";
+import { useAuth } from "@/app/providers/AuthProvider";
+import { withAuth } from "@/app/hocs/withAuth";
+import Image from "next/image";
 
-const QuoteForm = () => {
+const CreateQuotePage = () => {
+  const { token } = useAuth();
   const router = useRouter();
   const [quoteText, setQuoteText] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -22,12 +27,37 @@ const QuoteForm = () => {
   };
 
   // Handle form submission with proper typing
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!imageFile || quoteText.trim() === "") return;
-  };
+    try {
+      const formData = new FormData();
+      formData.append('file', imageFile);
+      const response = await fetch(MEDIA_UPLOAD_URL, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Authorization': token
+        }
+      });
+      const [{ url }] = await response.json();
+      const requestBody = { text: quoteText, mediaUrl: url };
+      await fetch(QUOTE_POST_URL, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      });
+      router.push(PAGE_ROUTES.QUOTE_LIST);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [token, quoteText, imageFile, router]);
 
   const handleBackClick = () => {
+    console.log({ router });
     router.push(PAGE_ROUTES.QUOTE_LIST);
   };
 
@@ -51,10 +81,12 @@ const QuoteForm = () => {
           <div className="relative">
             {/* Background image */}
             {/* Background image */}
-            <img
+            <Image
               src={imageURL || "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlYXxlbnwwfHx8fDE2NTI4NTk1MDg&ixlib=rb-1.2.1&q=80&w=1080"} // Direct image URL from Unsplash
               alt="Quote Background"
-              className="rounded-lg w-full h-40 object-cover bg-white" // Set height to align with QuoteList
+              className="rounded-lg w-full h-40 object-cover bg-white"
+              width={800}
+              height={600}
             />
 
             {/* Quote Text Overlay */}
@@ -63,7 +95,6 @@ const QuoteForm = () => {
                 {quoteText}
               </p>
             </div>
-            <p className="absolute bottom-2 right-2 text-sm">@ravi12rocks</p>
           </div>
         </div>
 
@@ -116,4 +147,6 @@ const QuoteForm = () => {
   );
 };
 
-export default QuoteForm;
+const CreateQuotePageWrapper = withAuth(CreateQuotePage);
+
+export default CreateQuotePageWrapper;

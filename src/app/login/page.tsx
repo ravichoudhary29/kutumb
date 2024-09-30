@@ -28,7 +28,7 @@ const LoginPage = () => {
     if (token && PAGE_ROUTES.LOGIN === pathname) {
       router.replace(PAGE_ROUTES.QUOTE_LIST);
     }
-  }, [token, pathname]);
+  }, [token, pathname, router]);
 
   return (
     <article className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -52,7 +52,7 @@ const LoginPage = () => {
               value={username ?? ''}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your username"
-              className="input bg-white input-bordered rounded-md mt-2 p-3 text-lg border-gray-300 focus:ring-2 focus:ring-blue-300"
+              className="input bg-white input-bordered rounded-md mt-2 p-3 text-lg focus:ring-blue-300 border border-blue-100"
               autoComplete="username"
             />
           </label>
@@ -62,7 +62,7 @@ const LoginPage = () => {
               value={otp ?? ''}
               type="password"
               placeholder="****"
-              className="input bg-white input-bordered rounded-md mt-2 p-3 text-lg border-gray-300 focus:ring-2 focus:ring-blue-300"
+              className="input bg-white input-bordered rounded-md mt-2 p-3 text-lg focus:ring-blue-300 border border-blue-100"
               autoComplete="current-password"
               onChange={(e) => setOtp(String(e.target.value))}
             />

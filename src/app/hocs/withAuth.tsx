@@ -3,6 +3,7 @@ import { useAuth } from '@/app/providers/AuthProvider';
 import { useRouter, usePathname } from 'next/navigation';
 import { ComponentType, useEffect } from 'react';
 import { PAGE_ROUTES } from '@/app/libs/pages-routes';
+import { Header } from '@/app/components/header';
 
 export function withAuth<T extends JSX.IntrinsicAttributes>(
   Component: ComponentType<T>,
@@ -17,9 +18,14 @@ export function withAuth<T extends JSX.IntrinsicAttributes>(
       if (!token) {
         router.replace(PAGE_ROUTES.LOGIN);
       }
-    }, [token, pathname]);
+    }, [token, pathname, router]);
 
-    return <Component {...hocProps} />;
+    return (
+      <section>
+        <Header />
+        <Component {...hocProps} />;
+      </section>
+    );
   };
 
   return AuthHOC;

@@ -12,7 +12,7 @@ function Home() {
 
   useEffect(() => {
     router.replace(PAGE_ROUTES.QUOTE_LIST);
-  }, [token]);
+  }, [token, router]);
 
   return null;
 }

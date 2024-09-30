@@ -9,7 +9,7 @@ import { useQuotes } from "@/app/providers/QuotesProvider";
 
 const QuoteList = () => {
   const router = useRouter();
-  const { quotes } = useQuotes();
+  const { quotes, allQuotesFetched, fetchNextPage } = useQuotes();
 
   const handleCreateQuote = () => {
     router.push(PAGE_ROUTES.NEW_QUOTE);
@@ -31,9 +31,19 @@ const QuoteList = () => {
             </div>
           ))}
         </div>
+        {quotes.length > 0 && !allQuotesFetched && (
+          <div className="flex justify-center mt-6">
+            <button
+              className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+              onClick={fetchNextPage}
+            >
+              Load more
+            </button>
+          </div>
+        )}
 
         {/* Floating Create Quote Button at the Bottom */}
-        <div className="fixed right-4 top-4">
+        <div className="fixed right-4 bottom-4">
           <button className="bg-green-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-green-500 transition duration-300" onClick={handleCreateQuote}>
             Create Quote +
           </button>
