@@ -2,7 +2,6 @@
 
 import { useAuth } from "@/app/providers/AuthProvider";
 import React, { FormEvent, useEffect, useState } from "react";
-import { withAuth } from "@/app/hocs/withAuth";
 import { PAGE_ROUTES } from "@/app/libs/pages-routes";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -79,7 +78,4 @@ const LoginPage = () => {
   );
 };
 
-// Exclude login page from redirection when the user is not logged in
-const LoginWrapper = withAuth(LoginPage);
-
-export default LoginWrapper;
+export default LoginPage;

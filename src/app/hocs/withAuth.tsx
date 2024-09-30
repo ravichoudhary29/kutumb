@@ -5,9 +5,7 @@ import { ComponentType, useEffect } from 'react';
 import { PAGE_ROUTES } from '@/app/libs/pages-routes';
 import { Header } from '@/app/components/header';
 
-export function withAuth<T extends JSX.IntrinsicAttributes>(
-  Component: ComponentType<T>,
-): ComponentType<T> {
+export function withAuth<T>(Component: ComponentType<T>): ComponentType<T> {
   const AuthHOC = (hocProps: T) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -23,7 +21,7 @@ export function withAuth<T extends JSX.IntrinsicAttributes>(
     return (
       <section>
         <Header />
-        <Component {...hocProps} />;
+        <Component {...hocProps} />
       </section>
     );
   };
