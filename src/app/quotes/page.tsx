@@ -16,9 +16,9 @@ const QuoteList: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-200">
       {/* Main Container */}
-      <div className="border rounded-lg sm:p-8 max-sm:p-4 bg-white shadow-xl relative">
+      <div className="border rounded-lg sm:p-8 max-sm:p-4 bg-white shadow-lg relative">
         {/* Quotes Grid */}
         <div className="grid max-sm:grid-cols-1 sm:grid-cols-2 gap-6">
           {quotes.map((quote) => (
@@ -32,7 +32,7 @@ const QuoteList: React.FC = () => {
                   className="absolute h-[100%] w-[100%] top-0 left-0 object-cover z-0 opacity-60"
                 />
               )}
-              <div className="relative z-10 p-4 bg-opacity-50 bg-black text-white">
+              <div className="relative z-10 p-4 bg-black bg-opacity-70 text-white">
                 <p className="font-medium text-lg">
                   {quote.text}
                 </p>
@@ -44,7 +44,7 @@ const QuoteList: React.FC = () => {
         {quotes.length > 0 && !allQuotesFetched && (
           <div className="flex justify-center mt-6">
             <button
-              className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+              className="bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
               onClick={fetchNextPage}
             >
               Load more
@@ -54,7 +54,7 @@ const QuoteList: React.FC = () => {
 
         {/* Floating Create Quote Button at the Bottom */}
         <div className="fixed right-4 bottom-4">
-          <button className="bg-green-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-green-500 transition duration-300" onClick={handleCreateQuote}>
+          <button className="bg-green-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-green-600 transition duration-300" onClick={handleCreateQuote}>
             Create Quote +
           </button>
         </div>
