@@ -23,11 +23,21 @@ const QuoteList: React.FC = () => {
         <div className="grid max-sm:grid-cols-1 sm:grid-cols-2 gap-6">
           {quotes.map((quote) => (
             <div key={quote.id} className="relative rounded-lg text-center flex flex-col justify-center shadow-md h-[240px] w-[320px] overflow-hidden">
-              {quote.mediaUrl && <Image src={quote.mediaUrl} alt={quote.text} width="320" height="240" className="absolute h-[100%] w-[100%] top-0 left-0 object-cover" />}
-              <p className="font-medium text-lg">
-                {quote.text}
-              </p>
-              <p className="mt-2 text-sm font-semibold">{quote.username}</p>
+              {quote.mediaUrl && (
+                <Image
+                  src={quote.mediaUrl}
+                  alt={quote.text}
+                  width="320"
+                  height="240"
+                  className="absolute h-[100%] w-[100%] top-0 left-0 object-cover z-0 opacity-60"
+                />
+              )}
+              <div className="relative z-10 p-4 bg-opacity-50 bg-black text-white">
+                <p className="font-medium text-lg">
+                  {quote.text}
+                </p>
+                <p className="mt-2 text-sm font-semibold">{quote.username}</p>
+              </div>
             </div>
           ))}
         </div>
