@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { PAGE_ROUTES } from "../libs/pages-routes";
 
 
-const Header = () => {
+const Header: React.FC = () => {
   const { handleLogout } = useAuth();
   const pathname = usePathname();
   const isLoginPage = pathname === PAGE_ROUTES.LOGIN;
@@ -16,9 +16,9 @@ const Header = () => {
         onClick={handleLogout}
       >
         Logout
-      </button>}
+      </button>
+      }
     </header>
-
   );
 };
 

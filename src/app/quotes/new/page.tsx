@@ -78,9 +78,9 @@ const CreateQuotePage: React.FC = () => {
             <Image
               src={imageURL || "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlYXxlbnwwfHx8fDE2NTI4NTk1MDg&ixlib=rb-1.2.1&q=80&w=1080"}
               alt="Quote Background"
-              className="rounded-lg w-full h-40 object-cover bg-white"
-              width={800}
-              height={600}
+              className="rounded-lg object-cover bg-white"
+              width={620}
+              height={480}
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <p className="text-xl font-bold text-center text-white">
