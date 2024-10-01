@@ -60,7 +60,7 @@ const CreateQuotePage: React.FC = () => {
   const imageURL = useMemo(() => imageFile ? URL.createObjectURL(imageFile) : null, [imageFile]);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-200">
+    <div className="flex justify-center items-center bg-gray-200">
       {/* Main Container */}
       <form className="border rounded-lg p-8 bg-white shadow-lg w-full max-w-md md:max-w-lg lg:max-w-2xl relative" onSubmit={handleSubmit}>
 
@@ -74,13 +74,15 @@ const CreateQuotePage: React.FC = () => {
 
         {/* Image with Quote Text */}
         <div className="bg-gray-300 p-2 rounded-lg mb-6 mt-10">
-          <div className="relative">
+          <div className="relative w-full" style={{ maxWidth: "620px" }}>
             <Image
               src={imageURL || "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlYXxlbnwwfHx8fDE2NTI4NTk1MDg&ixlib=rb-1.2.1&q=80&w=1080"}
               alt="Quote Background"
               className="rounded-lg object-cover bg-white"
               width={620}
-              height={480}
+              height={300}
+              // Make it responsive
+              style={{ width: '100%', height: 'auto' }}
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <p className="text-xl font-bold text-center text-white">
